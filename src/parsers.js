@@ -1,7 +1,7 @@
 import { readFileSync } from "node:fs";
-import path from "path";
+import path from "node:path";
 
-export default (filepath) => {
+const pathParser = (filepath) => {
   const absolutePath = path.resolve(process.cwd(), filepath);
   const content = readFileSync(absolutePath);
   const extension = path.extname(filepath).toLowerCase();
@@ -10,3 +10,5 @@ export default (filepath) => {
     return JSON.parse(content);
   }
 };
+
+export default pathParser
