@@ -1,27 +1,27 @@
-import genDiff from '../src/index.js'
+import genDiff from "../src/index.js";
 
-const FIXTURES_PATH = '__tests__/__fixtures__'
+const FIXTURES_PATH = "__tests__/__fixtures__";
 
-describe('gendiff', () => {
-  test('Equal files', () => {
+describe("gendiff", () => {
+  test("Equal files", () => {
     const result = genDiff(
       `${FIXTURES_PATH}/file1.json`,
-      `${FIXTURES_PATH}/file1.json`,
-    )
+      `${FIXTURES_PATH}/file1.json`
+    );
 
     expect(result).toBe(`{
     follow: false
     host: hexlet.io
     proxy: 123.234.53.22
     timeout: 50
-}`)
-  })
+}`);
+  });
 
-  test('Different files', () => {
+  test("Different files", () => {
     const result = genDiff(
       `${FIXTURES_PATH}/file1.json`,
-      `${FIXTURES_PATH}/file2.json`,
-    )
+      `${FIXTURES_PATH}/file2.json`
+    );
 
     expect(result).toBe(`{
   - follow: false
@@ -30,20 +30,32 @@ describe('gendiff', () => {
   - timeout: 50
   + timeout: 20
   + verbose: true
-}`)
-  })
+}`);
+  });
 
-  test('One of the files is empty', () => {
+  test("One of the files is empty", () => {
     const result = genDiff(
       `${FIXTURES_PATH}/empty.json`,
-      `${FIXTURES_PATH}/file1.json`,
-    )
+      `${FIXTURES_PATH}/file1.json`
+    );
 
     expect(result).toBe(`{
   + follow: false
   + host: hexlet.io
   + proxy: 123.234.53.22
   + timeout: 50
-}`)
-  })
-})
+}`);
+  });
+
+  test("Unsupported file format", () => {
+    expect(() =>
+      genDiff(`${FIXTURES_PATH}/file1.json`, `${FIXTURES_PATH}/format.txt`)
+    ).toThrow("Unsupported extension");
+  });
+
+  test("Both files unsupported format", () => {
+    expect(() =>
+      genDiff(`${FIXTURES_PATH}/format.txt`, `${FIXTURES_PATH}/format2.yaml`)
+    ).toThrow("Unsupported extension");
+  });
+});

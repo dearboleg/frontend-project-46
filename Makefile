@@ -12,4 +12,10 @@ lint: # Запуск eslint
 
 
 lint-fix: # Запуск eslint fix
-	npx eslint . --fix			
+	npx eslint . --fix		
+
+run: #Запуск node bin/gendiff.js data/file1.json data/file2.json
+	node bin/gendiff.js data/file1.json data/file2.json
+
+test: #Запуск тестов
+	npm test		
